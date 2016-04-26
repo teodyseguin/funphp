@@ -31,11 +31,6 @@ var App = (function($, service) {
           })
           .then(function(result) {
             if (result) {
-              //list[key].name = $('#car-name').val();
-              //list[key].color = $('#car-color').val();
-              //list[key].weight = $('#car-weight').val();
-              //list[key].date_time = Date.now();
-
               Map.mapTable(service.getCars());
               return;
             }
