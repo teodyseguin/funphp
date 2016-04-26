@@ -9,8 +9,8 @@ var Map = (function($, App) {
         _(listing).forEach(function(car) {
           rows += '<tr data-id="car-'+car.id+'">' +
             '<td>' + car.id + '</td>' +
-            '<td>' + car.name + '</td>' +
-            '<td>' + car.color + '</td>' +
+            '<td><i class="fa fa-car"></i>' + car.name + '</td>' +
+            '<td class="' + car.color + '">' + car.color + '</td>' +
             '<td>' + car.weight + '</td>' +
             '<td>' + new Date(parseInt(car.date_time)) + '</td>' +
             '<td><a href="#" class="delete" data-id="delete-'+ car.id +'">delete</a></td>' +
@@ -31,8 +31,8 @@ var Map = (function($, App) {
       _(listing).forEach(function(car) {
         rows += '<tr data-id="car-'+car.id+'">' +
           '<td>' + car.id + '</td>' +
-          '<td>' + car.name + '</td>' +
-          '<td>' + car.color + '</td>' +
+          '<td><i class="fa fa-car"></i>' + car.name + '</td>' +
+          '<td class="' + car.color + '">' + car.color + '</td>' +
           '<td>' + car.weight + '</td>' +
           '<td>' + new Date(parseInt(car.date_time)) + '</td>' +
           '<td><a href="#" class="delete" data-id="delete-'+ car.id +'">delete</a></td>' +
