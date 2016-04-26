@@ -43,35 +43,43 @@ var Map = (function($, App) {
 
       // clearing this variable because on update, we'll need to override the previous records
       rows = '';
+
+      _incrementLastWeight();
+
       return;
     });
   }
 
   function mapWeights() {
     var weightOptions = '';
-    var counter = 0;
+    var counter = 1;
 
     App.list.then(function(list) {
       if (list.length) {
         _(list).forEach(function(car) {
-          weightOptions += '<option value="' + car.weight + '">' + car.weight + '</option>';
+          weightOptions += '<option value="' + counter + '">' + counter + '</option>';
           counter++;
         });
 
-        weightOptions = '<option value="">-- Set Car Weight --</option>' + weightOptions + '<option value="'+ counter++ + '">' + counter++ + '</option>';
+        weightOptions = '<option value="">-- Set Car Weight --</option>' + weightOptions;
       }
       else {
-        weightOptions += '<option value="1">1</option>';
         weightOptions = '<option value="">-- Set Car Weight --</option>' + weightOptions;
       }
 
       $('#car-weight').html(weightOptions);
+
+      _incrementLastWeight();
     });
   }
 
   function initMapping() {
     mapTable();
     mapWeights();
+  }
+
+  function _incrementLastWeight() {
+    $('#car-weight').append('<option value="' + (parseInt($('#car-weight option:last').text()) + 1) + '">' + (parseInt($('#car-weight option:last').text()) + 1) + '</option>');
   }
 
   return {
