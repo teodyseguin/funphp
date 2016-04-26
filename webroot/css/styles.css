@@ -1,6 +1,37 @@
+@font-face {
+  font-family: FontAwesome;
+  src: url(../fonts/fontawesome-webfont.woff);
+}
+/* line 6, ../sass/_main.scss */
+.fa {
+  font: normal normal normal 14px/1 FontAwesome;
+  text-rendering: auto;
+  padding-right: 10px;
+}
+
+/* line 11, ../sass/_main.scss */
+.fa-car:before {
+  content: '\f1b9';
+}
+
 /* line 2, ../sass/components/_table.scss */
 #cars-table td {
   cursor: pointer;
+}
+/* line 6, ../sass/components/_table.scss */
+#cars-table .blue {
+  background-color: blue;
+  color: #ffffff;
+}
+/* line 11, ../sass/components/_table.scss */
+#cars-table .green {
+  background-color: green;
+  color: #000000;
+}
+/* line 16, ../sass/components/_table.scss */
+#cars-table .red {
+  background-color: red;
+  color: #ffffff;
 }
 
 /* line 1, ../sass/components/_form.scss */
