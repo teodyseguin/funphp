@@ -1,0 +1,13 @@
+@font-face {
+  font-family: FontAwesome;
+  src: url(../fonts/fontawesome-webfont.woff);
+}
+
+.fa {
+  font: normal normal normal 14px/1 FontAwesome;
+  text-rendering: auto;
+  padding-right: 10px;
+}
+.fa-car:before {
+  content: '\f1b9';
+}
