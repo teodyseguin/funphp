@@ -13,13 +13,13 @@ var Map = (function($, App) {
             '<td>' + car.color + '</td>' +
             '<td>' + car.weight + '</td>' +
             '<td>' + new Date(parseInt(car.date_time)) + '</td>' +
-            '<td><a href="#" class="delete" data-id="delete-'+ car.id +'">x</a></td>' +
+            '<td><a href="#" class="delete" data-id="delete-'+ car.id +'">delete</a></td>' +
             '</tr>';
         });
 
         $('#cars-table tbody').html(rows);
 
-        // clearing this variable here as well
+        // clearing this variable because on update, we'll need to override the previous records
         rows = '';
 
         return;
@@ -35,7 +35,7 @@ var Map = (function($, App) {
           '<td>' + car.color + '</td>' +
           '<td>' + car.weight + '</td>' +
           '<td>' + new Date(parseInt(car.date_time)) + '</td>' +
-          '<td><a href="#" class="delete" data-id="delete-'+ car.id +'">x</a></td>' +
+          '<td><a href="#" class="delete" data-id="delete-'+ car.id +'">delete</a></td>' +
           '</tr>';
       });
 
@@ -57,7 +57,8 @@ var Map = (function($, App) {
     App.list.then(function(list) {
       if (list.length) {
         _(list).forEach(function(car) {
-          weightOptions += '<option value="' + counter + '">' + counter + '</option>';
+          var w = counter < 10 ? '0' + counter : counter;
+          weightOptions += '<option value="' + w + '">' + w + '</option>';
           counter++;
         });
 
@@ -79,7 +80,15 @@ var Map = (function($, App) {
   }
 
   function _incrementLastWeight() {
-    $('#car-weight').append('<option value="' + (parseInt($('#car-weight option:last').text()) + 1) + '">' + (parseInt($('#car-weight option:last').text()) + 1) + '</option>');
+    var l = $('#car-weight option').length;
+
+    if (l == 1) {
+      $('#car-weight').append('<option value="01">01</option>');
+    }
+    else {
+      var w = l < 10 ? '0' + l : l;
+      $('#car-weight').append('<option value="' + w + '">' + w + '</option>');
+    }
   }
 
   return {
