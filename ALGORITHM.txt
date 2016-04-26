@@ -1,0 +1,31 @@
+Create
+Add car to table
+  Call an endpoint for creating a new car record
+  The endpoint accepts some arguments. car name, car color, date and time
+  The endpoint calls a utility class to store this information to the database
+  Car ID is automatically generated as well as the car weight. Car ID is the same with the weight value e.g. id = 1: weight = 1
+
+Read
+Get all cars from table
+  select all fields which are id, name, color, weight, date time order by weight in ascending order
+  if 2 or more records has the same weight, need to reorder them by date time in descending order
+
+Update
+When a car name is updated, pick it’s id to reference it from the table
+When a car color is updated, pick it’s id to reference it from the table
+When a car weight is updated, pick it’s id to reference it from the table. Make it’s weight value the same with the weight value of the current record from that current position. Also update it’s date and time
+e.g
+In current position
+Name: Car A; ID: 1; Weight: 1; Date & Time: xx-xx-xxxx:00:00:00
+
+Record to be updated
+Name: Car B; ID: 2; Weight: 2; Date & Time: xx-xx-xxxx:00:00:00
+
+After update
+Name: Car B; ID: 2; Weight: 1; Date and Time: xx-xx-xxxx:00:00:00
+
+  On display, reorder the arrangement of cars based on their weights in ascending order
+  If from display, 2 or more records has the same weight, reorder them by date time in descending order
+
+Delete
+Pick the id of the car and reference it from the table
