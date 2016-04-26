@@ -1,0 +1,9 @@
+/* line 2, ../sass/components/_table.scss */
+#cars-table td {
+  cursor: pointer;
+}
+
+/* line 1, ../sass/components/_form.scss */
+#table-section {
+  padding-left: 0;
+}

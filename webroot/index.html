@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Theme Template for Bootstrap</title>
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+  </head>
+
+  <body role="document">
+    <nav class="navbar navbar-inverse navbar-fixed-top"><div class="container"></div></nav>
+
+    <div class="container theme-showcase" role="main">
+s
+      <div class="row">
+        <div class="page-header">
+          <h1>Cars Table</h1>
+        </div>
+
+        <div class="">
+          <table class="table" id="cars-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Color</th>
+                <th>Weight</th>
+                <th>Date & Time entered</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="page-header">
+          <h1>Enter new car</h1>
+        </div>
+
+        <section class="col-xs-9 col-xs-offset-0" id="table-section">
+          <form>
+            <p>
+              <input type="hidden" value="" id="car-id" />
+            </p>
+            <p>
+              <input type="text" placeholder="Car Name" class="form-control" id="car-name" />
+            </p>
+            <p>
+              <select class="form-control" id="car-color">
+                <option value="">-- Select Car Color --</option>
+                <option value="blue">Blue</option>
+                <option value="red">Red</option>
+                <option value="green">Green</option>
+              </select>
+            </p>
+            <p>
+              <select class="form-control" id="car-weight"></select>
+            </p>
+            <button type="button" class="btn btn-lg btn-default" id="save-car" disabled>Save</button>
+            <button type="button" class="btn btn-lg btn-default" id="cancel-car" disabled>Cancel</button>
+          </form>
+        </section>
+      </div>
+
+    </div>
+
+  <script src="../client/library/jquery.min.js"></script>
+  <script src="../client/library/lodash.js"></script>
+  <script src="../client/library/bluebird.min.js"></script>
+  <script src="../client/service.js"></script>
+  <script src="../client/app.js"></script>
+  <script src="../client/mapping.js"></script>
+  <script src="../client/events.js"></script>
+  </body>
+</html>
