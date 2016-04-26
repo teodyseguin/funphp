@@ -32,6 +32,7 @@ var App = (function($, service) {
           .then(function(result) {
             if (result) {
               Map.mapTable(service.getCars());
+              _clear();
               return;
             }
           });
@@ -85,6 +86,23 @@ var App = (function($, service) {
     $('#cancel-car').attr('disabled', false);
   }
 
+  function filter($filter) {
+    if ($filter.val()) {
+      Map.mapTable(_filterColor($filter));
+    }
+    else {
+      Map.mapTable(cars.list);
+    }
+  }
+
+  function _filterColor($filter) {
+    return Promise.resolve(
+      cars.list.then(function(list) {
+        return _.filter(list, ['color', $filter.val()]);
+      })
+    );
+  }
+
   function _populate() {
     var carObj = {};
     carObj.name = $('#car-name').val();
@@ -108,6 +126,8 @@ var App = (function($, service) {
     $('#car-weight').val('');
     $('#save-car').attr('disabled', true);
     $('#cancel-car').attr('disabled', true);
+    $('#filter-color').val('');
+    _editing = false;
   }
 
   return {
@@ -117,6 +137,7 @@ var App = (function($, service) {
     cancel         : cancel,
     remove         : remove,
     change         : change,
+    filter         : filter,
     rowSelected    : rowSelected,
     reorderWeights : reorderWeights
   };
