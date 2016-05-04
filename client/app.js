@@ -16,26 +16,37 @@ var App = (function($, service) {
 
   function update() {
     var listings = '';
+    var newCarObj = {};
 
     cars.list.then(function(list) {
       listings = list;
-    }).then(function() {
+    })
+    .then(function() {
       _(listings).forEach(function(value, key) {
         if (value.id == $('#car-id').val()) {
-          service.updateCar({
+          newCarObj = {
             id: $('#car-id').val(),
             name: $('#car-name').val(),
             color: $('#car-color').val(),
             weight: $('#car-weight').val(),
+            sub_weight: $('#car-subweight').val(),
             date_time: Date.now()
-          })
+          };
+
+          service.updateCar(newCarObj)
           .then(function(result) {
-            if (result) {
-              Map.mapTable(service.getCars());
-              _clear();
+            if (!result) {
               return;
             }
-          });
+            Map.mapTable(service.getCars());
+            _clear();
+            return;
+          })
+          .then(function() {
+            cars.list.then(function(list) {
+              list[key] = newCarObj;
+            });
+          })
         }
       });
     });
@@ -51,6 +62,7 @@ var App = (function($, service) {
           $('#car-name').val(car.name);
           $('#car-color').val(car.color);
           $('#car-weight').val(car.weight);
+          $('#car-subweight').val(car.sub_weight);
         }
       });
 
@@ -81,7 +93,7 @@ var App = (function($, service) {
     });
   }
 
-  function change() {
+  function change($field) {
     $('#save-car').attr('disabled', false);
     $('#cancel-car').attr('disabled', false);
   }
@@ -95,24 +107,21 @@ var App = (function($, service) {
     }
   }
 
-  function _filterColor($filter) {
-    return Promise.resolve(
-      cars.list.then(function(list) {
-        return _.filter(list, ['color', $filter.val()]);
-      })
-    );
-  }
-
   function _populate() {
-    var carObj = {};
-    carObj.name = $('#car-name').val();
-    carObj.color = $('#car-color').val();
-    carObj.weight = $('#car-weight').val();
-    carObj.date_time = Date.now();
+    var carObj = {
+      name: $('#car-name').val(),
+      color: $('#car-color').val(),
+      weight: $('#car-weight').val(),
+      sub_weight: $('#car-subweight').val(),
+      date_time: Date.now()
+    };
 
     service.saveCar(carObj).then(function(result) {
       if (result) {
         Map.mapTable(service.getCars());
+        $(document).on('click', '#cars-table tbody tr', {}, function(e) {
+          App.rowSelected($(this));
+        });
         _clear();
         _editing = false;
       }
@@ -124,6 +133,7 @@ var App = (function($, service) {
     $('#car-name').val('');
     $('#car-color').val('');
     $('#car-weight').val('');
+    $('#car-subweight').val('');
     $('#save-car').attr('disabled', true);
     $('#cancel-car').attr('disabled', true);
     $('#filter-color').val('');
