@@ -3,6 +3,10 @@
   src: url(../fonts/fontawesome-webfont.woff);
 }
 
+html, body {
+  height: 100%;
+}
+
 .fa {
   font: normal normal normal 14px/1 FontAwesome;
   text-rendering: auto;
@@ -10,4 +14,14 @@
 }
 .fa-car:before {
   content: '\f1b9';
+}
+
+.theme-showcase {
+  margin-bottom: 50px;
+}
+
+footer {
+  border-top: 1px solid #cccccc;
+  background-color: #eeeeee;
+  height: 142px;
 }
