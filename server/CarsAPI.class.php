@@ -45,8 +45,8 @@
     protected function saveCar() {
       if ($this->method == 'PUT') {
         $carObj = json_decode($this->file);
-        $insertString = "INSERT INTO cars (name, color, weight, date_time) " .
-                        "VALUES ('" . $carObj->name . "', '" . $carObj->color . "', '" . $carObj->weight . "', '" . $carObj->date_time . "')";
+        $insertString = "INSERT INTO cars (name, color, weight, sub_weight, date_time) " .
+                        "VALUES ('" . $carObj->name . "', '" . $carObj->color . "', '" . $carObj->weight . "', '" . $carObj->sub_weight . "', '" . $carObj->date_time . "')";
 
         $result = mysqli_query($this->connection, $insertString);
 
@@ -68,6 +68,7 @@
                         "SET name = '" . $carObj->name . "', " .
                         "color = '" . $carObj->color . "', " .
                         "weight = '" . $carObj->weight . "', " .
+                        "sub_weight = '" . $carObj->sub_weight . "', " .
                         "date_time = '" . $carObj->date_time . "' " .
                         "WHERE id = '" . $carObj->id . "'";
 
