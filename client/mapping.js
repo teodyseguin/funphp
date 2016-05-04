@@ -1,99 +1,94 @@
 var Map = (function($, App) {
-  function mapTable(carList) {
-    var rows = '';
-
+  function mapTable(carList, args) {
     if (carList) {
       carList.then(function(list) {
-        var listing = _.orderBy(list, ['weight', 'date_time'], ['asc', 'desc']);
+        if (!args) {
+          var listing = _.orderBy(list, ['weight', 'sub_weight'], ['asc', 'asc']);
+          _distribute(listing).then(function(rows) { $('#cars-table tbody').html(rows); });
+        }
 
-        _(listing).forEach(function(car) {
-          rows += '<tr data-id="car-'+car.id+'">' +
-            '<td>' + car.id + '</td>' +
-            '<td><i class="fa fa-car"></i>' + car.name + '</td>' +
-            '<td class="' + car.color + '">' + car.color + '</td>' +
-            '<td>' + car.weight + '</td>' +
-            '<td>' + new Date(parseInt(car.date_time)) + '</td>' +
-            '<td><a href="#" class="delete" data-id="delete-'+ car.id +'">delete</a></td>' +
-            '</tr>';
-        });
-
-        $('#cars-table tbody').html(rows);
-
-        // clearing this variable because on update, we'll need to override the previous records
-        rows = '';
-
-        return;
+        if (args && typeof args == 'object' && typeof args.sort !== 'undefined' && args.sort == false) {
+          _distribute(list).then(function(rows) { $('#cars-table tbody').html(rows); });
+        }
       });
+
+      return;
     }
 
     App.list.then(function(list) {
-      var listing = _.orderBy(list, ['weight', 'date_time'], ['asc', 'desc']);
-      _(listing).forEach(function(car) {
-        rows += '<tr data-id="car-'+car.id+'">' +
-          '<td>' + car.id + '</td>' +
-          '<td><i class="fa fa-car"></i>' + car.name + '</td>' +
-          '<td class="' + car.color + '">' + car.color + '</td>' +
-          '<td>' + car.weight + '</td>' +
-          '<td>' + new Date(parseInt(car.date_time)) + '</td>' +
-          '<td><a href="#" class="delete" data-id="delete-'+ car.id +'">delete</a></td>' +
-          '</tr>';
-      });
+      if (!args) {
+        var listing = _.orderBy(list, ['weight', 'sub_weight'], ['asc', 'asc']);
+        _distribute(listing).then(function(rows) { $('#cars-table tbody').html(rows); });
+      }
 
-      $('#cars-table tbody').html(rows);
-
-      // clearing this variable because on update, we'll need to override the previous records
-      rows = '';
-
-      _incrementLastWeight();
+      if (args && typeof args == 'object' && typeof args.sort !== 'undefined' && args.sort == false) {
+        _distribute(list).then(function(rows) { $('#cars-table tbody').html(rows); });
+      }
 
       return;
     });
   }
 
+  function _distribute(listing) {
+    var rows = '';
+
+    _(listing).forEach(function(car) {
+      rows += '<tr data-id="car-'+car.id+'">' +
+        '<td>' + car.id + '</td>' +
+        '<td><i class="fa fa-car"></i>' + car.name + '</td>' +
+        '<td class="' + car.color + '">' + car.color + '</td>' +
+        '<td>' + car.weight + '</td>' +
+        '<td>' + car.sub_weight + '</td>' +
+        '<td>' + new Date(parseInt(car.date_time)) + '</td>' +
+        '<td><a href="#" class="delete" data-id="delete-'+ car.id +'">delete</a></td>' +
+        '</tr>';
+    });
+
+    return Promise.resolve(rows);
+  }
+
   function mapWeights() {
+    var higherWeightOptions = '';
     var weightOptions = '';
     var counter = 1;
 
-    App.list.then(function(list) {
-      if (list.length) {
-        _(list).forEach(function(car) {
-          var w = counter < 10 ? '0' + counter : counter;
-          weightOptions += '<option value="' + w + '">' + w + '</option>';
-          counter++;
-        });
+    for (var i = 1; i <= 50; i++) {
+      var w = i < 10 ? '0' + i : i;
+      higherWeightOptions += '<option value="-' + w + '">-' + w + '</option>';
+      weightOptions += '<option value="' + w + '">' + w + '</option>';
+    }
 
-        weightOptions = '<option value="">-- Set Car Weight --</option>' + weightOptions;
-      }
-      else {
-        weightOptions = '<option value="">-- Set Car Weight --</option>' + weightOptions;
-      }
+    weightOptions = '<option value="">-- Set Car Weight --</option>' + weightOptions;
 
-      $('#car-weight').html(weightOptions);
+    $('#car-weight').html(higherWeightOptions.concat(weightOptions));
+    $('#car-weight').val('');
+  }
 
-      _incrementLastWeight();
-    });
+  function mapSubWeights() {
+    var counter = 1;
+    var higherSubWeightOptions = '';
+    var subWeightOptions = '';
+
+    for (var i = 1; i <= 50; i++) {
+      higherSubWeightOptions += '<option value="-' + i + '">-' + i + '</option>';
+      subWeightOptions += '<option value="' + i + '">' + i + '</option>';
+    }
+
+    subWeightOptions = '<option value="">-- Select Sub weights --</option>' + subWeightOptions;
+    $('#car-subweight').html(higherSubWeightOptions.concat(subWeightOptions));
+    $('#car-subweight').val('');
   }
 
   function initMapping() {
     mapTable();
     mapWeights();
-  }
-
-  function _incrementLastWeight() {
-    var l = $('#car-weight option').length;
-
-    if (l == 1) {
-      $('#car-weight').append('<option value="01">01</option>');
-    }
-    else {
-      var w = l < 10 ? '0' + l : l;
-      $('#car-weight').append('<option value="' + w + '">' + w + '</option>');
-    }
+    mapSubWeights();
   }
 
   return {
-    initMapping : initMapping,
-    mapTable    : mapTable,
-    mapWeights  : mapWeights
+    initMapping   : initMapping,
+    mapTable      : mapTable,
+    mapWeights    : mapWeights,
+    mapSubWeights : mapSubWeights
   };
 })(jQuery, App);
