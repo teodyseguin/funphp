@@ -3,9 +3,18 @@
     Map.initMapping();
 
     $('#cancel-car').click(App.cancel);
-    $('#car-name').change(App.change);
-    $('#car-color').change(App.change);
-    $('#car-weight').change(App.change);
+    $('#car-name').change(function() {
+      App.change($(this));
+    });
+    $('#car-color').change(function() {
+      App.change($(this));
+    });
+    $('#car-weight').change(function() {
+      App.change($(this));
+    });
+    $('#car-subweight').change(function() {
+      App.change($(this));
+    });
     $('#filter-color').change(function() {
       App.filter($(this));
     });
