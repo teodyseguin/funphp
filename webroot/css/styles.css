@@ -3,15 +3,32 @@
   src: url(../fonts/fontawesome-webfont.woff);
 }
 /* line 6, ../sass/_main.scss */
+html, body {
+  height: 100%;
+}
+
+/* line 10, ../sass/_main.scss */
 .fa {
   font: normal normal normal 14px/1 FontAwesome;
   text-rendering: auto;
   padding-right: 10px;
 }
 
-/* line 11, ../sass/_main.scss */
+/* line 15, ../sass/_main.scss */
 .fa-car:before {
   content: '\f1b9';
+}
+
+/* line 19, ../sass/_main.scss */
+.theme-showcase {
+  margin-bottom: 50px;
+}
+
+/* line 23, ../sass/_main.scss */
+footer {
+  border-top: 1px solid #cccccc;
+  background-color: #eeeeee;
+  height: 142px;
 }
 
 /* line 2, ../sass/components/_table.scss */
